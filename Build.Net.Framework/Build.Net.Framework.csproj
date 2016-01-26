@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BuildProject.cs" />
     <Compile Include="ComputedString.cs" />
     <Compile Include="RunContext.cs" />
     <Compile Include="Operation.cs" />

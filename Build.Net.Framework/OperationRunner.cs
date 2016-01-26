@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Build.Net.Framework
 {
-    public class OperationRunner
+    public class OperationRunner<T> where T : RunContext
     {
         public OperationRegistry OperationRegistry { get; private set; }
 
@@ -15,15 +15,15 @@ namespace Build.Net.Framework
             OperationRegistry = registry;
         }
 
-        public virtual OperationRunner RunOperation(object key, RunContext context)
+        public virtual OperationRunner<T> RunOperation(object key, T context)
         {
-            return RunOperation<Operation>(key, context, null);
+            return RunOperation<Operation<T>>(key, context, null);
         }
 
-        public virtual OperationRunner RunOperation<T>(object key, RunContext context, Action<T> configure) where T : Operation
+        public virtual OperationRunner<T> RunOperation<TOperation>(object key, T context, Action<TOperation> configure) where TOperation : Operation<T>
         {
             Type operationType = OperationRegistry.GetOperationType(key);
-            var operation = CreateOperationInstance<T>(operationType);
+            var operation = CreateOperationInstance<TOperation>(operationType);
 
             if(configure != null)
             {
@@ -35,9 +35,9 @@ namespace Build.Net.Framework
             return this;
         }
 
-        public virtual T CreateOperationInstance<T>(Type operationType) where T : Operation
+        public virtual TOperation CreateOperationInstance<TOperation>(Type operationType) where TOperation : Operation<T>
         {
-            return Activator.CreateInstance(operationType) as T;
+            return Activator.CreateInstance(operationType) as TOperation;
         }
     }
 }

@@ -8,7 +8,7 @@ using Build.Net.Framework;
 namespace Build.Net.SmartData
 {
     [Operation(Name = "Local")]
-    public class LocalOperation: Operation
+    public class LocalOperation: Operation<RunContext>
     {
         public override bool Run(RunContext context)
         {
@@ -18,7 +18,7 @@ namespace Build.Net.SmartData
     }
 
     [Operation(Name = "Dev")]
-    public class DevOperation : Operation
+    public class DevOperation : Operation<RunContext>
     {
         public override bool Run(RunContext context)
         {
@@ -28,7 +28,7 @@ namespace Build.Net.SmartData
     }
 
     [Operation(Name = "QA")]
-    public class QAOperation : Operation
+    public class QAOperation : Operation<RunContext>
     {
         public override bool Run(RunContext context)
         {
@@ -38,7 +38,7 @@ namespace Build.Net.SmartData
     }
 
     [Operation(Name = "Configure")]
-    public class ConfigureOperation : Operation
+    public class ConfigureOperation : Operation<RunContext>
     {
         public override bool Run(RunContext context)
         {
@@ -48,7 +48,7 @@ namespace Build.Net.SmartData
     }
 
     [Operation(Name = "Default")]
-    public class DefaultOperation : Operation
+    public class DefaultOperation : Operation<RunContext>
     {
         public override bool Run(RunContext context)
         {

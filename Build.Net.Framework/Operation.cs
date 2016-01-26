@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Build.Net.Framework
 {
-    public class Operation
+    public class Operation<T> where T : RunContext
     {
-        public virtual bool Run(RunContext context)
+        public virtual bool Run(T context) 
         {
             return true;
         }

@@ -8,9 +8,9 @@ namespace Build.Net.Framework
 {
     public class RunContext
     {
-        public OperationRunner Runner { get; set; }
+        public OperationRunner<RunContext> Runner { get; set; }
 
-        public RunContext(OperationRunner runner)
+        public RunContext(OperationRunner<RunContext> runner)
         {
             Runner = runner;
         }

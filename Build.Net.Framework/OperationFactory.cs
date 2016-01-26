@@ -22,14 +22,33 @@ namespace Build.Net.Framework
 
         public virtual void LoadOperations(string projectPath)
         {
-            var assembly = LoadProject(projectPath);
+            var assembly = BuildAndLoadProject(projectPath);
             RegisterOperations(assembly);
+        }
+
+        public virtual BuildProject LoadProject(string projectPath)
+        {
+            var assembly = BuildAndLoadProject(projectPath);
+        }
+
+        static bool IsSubclassOfRawGeneric(Type generic, Type toCheck)
+        {
+            while (toCheck != null && toCheck != typeof(object))
+            {
+                var cur = toCheck.IsGenericType ? toCheck.GetGenericTypeDefinition() : toCheck;
+                if (generic == cur)
+                {
+                    return true;
+                }
+                toCheck = toCheck.BaseType;
+            }
+            return false;
         }
 
         protected virtual void RegisterOperations(Assembly assembly)
         {
-            var baseOperationType = typeof(Operation);
-            var operationTypes = assembly.GetTypes().Where(x => baseOperationType.IsAssignableFrom(x)).ToList();
+            var baseOperationType = typeof(Operation<>);
+            var operationTypes = assembly.GetTypes().Where(x => IsSubclassOfRawGeneric(baseOperationType, x)).ToList();
 
             foreach (var operationType in operationTypes)
             {
@@ -53,7 +72,7 @@ namespace Build.Net.Framework
             Registry.RegisterOperation(operationType, key);
         }
 
-        protected virtual Assembly LoadProject(string projectPath)
+        protected virtual Assembly BuildAndLoadProject(string projectPath)
         {
             var collection = new ProjectCollection();
             collection.DefaultToolsVersion = "4.0";

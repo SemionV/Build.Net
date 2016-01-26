@@ -21,7 +21,7 @@ namespace Build.Net
 
             var registry = new OperationRegistry();
             var factory = new OperationFactory(registry);
-            var runner = new OperationRunner(registry);
+            var runner = new OperationRunner<RunContext>(registry);
             var context = new RunContext(runner);
 
             factory.LoadOperations(projectPath);

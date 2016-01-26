@@ -7,7 +7,7 @@ using Build.Net.Framework;
 
 namespace Build.Net.Operations
 {
-    public class MsBuildOperation: Operation
+    public class MsBuildOperation: Operation<RunContext>
     {
         public override bool Run(RunContext context)
         {
