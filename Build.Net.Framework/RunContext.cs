@@ -8,11 +8,8 @@ namespace Build.Net.Framework
 {
     public class RunContext
     {
-        public OperationRunner<RunContext> Runner { get; set; }
-
-        public RunContext(OperationRunner<RunContext> runner)
+        public RunContext()
         {
-            Runner = runner;
         }
     }
 }

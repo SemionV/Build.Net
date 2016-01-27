@@ -8,6 +8,13 @@ namespace Build.Net.Framework
 {
     public class Operation<T> where T : RunContext
     {
+        public BuildEngine BuildEngine { get; private set; }
+
+        public Operation(BuildEngine buildEngine)
+        {
+            BuildEngine = buildEngine;
+        }
+
         public virtual bool Run(T context) 
         {
             return true;
